@@ -1,0 +1,70 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+    ViewBag.Title = "Login";
+    string CarouselId = Html.UniqueId();
+    string AcknowlagePrivacyPolicyId = Html.UniqueId();
+    string AcknowlageCookiePolicyId = Html.UniqueId();
+}
+
+<div id="@CarouselId" class="carousel slide carousel-fade h-100" data-bs-interval="false">
+    <div class="carousel-inner h-100">
+        <div class="carousel-item h-100 active">
+            <div class="d-block h-100">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h2>Privacy & Security Policy</h2>
+
+                        <div class="card border-1 border-primary mb-2">
+                            <div class="card-body p-1 overflow-auto text-start" style="min-height: 300px; max-height: 500px;">
+                                <small class="card-text">My Privacy Policy</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 text-center">
+                        @Html.ButtonWithIcon("Acknowlage", "fa-check", new { id = AcknowlagePrivacyPolicyId, @class = "btn-primary" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="carousel-item h-100">
+            <div class="d-block h-100">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h2>Cookie Policy</h2>
+
+                        <div class="card border-1 border-primary mb-2">
+                            <div class="card-body p-1 overflow-auto text-start" style="min-height: 300px; max-height: 500px;">
+                                <small class="card-text">My Cookie Policy</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 text-center">
+                        @Html.ButtonWithIcon("Acknowlage", "fa-check", new { id = AcknowlageCookiePolicyId, @class = "btn-primary" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="carousel-item h-100">
+            <div class="d-block h-100">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h2>Login</h2>
+
+                        <a href="@Url.Action("Login", "Auth", new { Token = "TestTokenValue" })" class="btn btn-link border border-2 border-primary fa-5x p-4" style="border-radius:50%;" title="Login">
+                            <i class="fas fa-sign-in-alt fa-3x"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+@Html.RenderJsInitData(new
+{
+    data_acknowlage_privacy_policy_id = $"#{AcknowlagePrivacyPolicyId}",
+    data_acknowlage_cookie_policy_id = $"#{AcknowlageCookiePolicyId}",
+    data_carousel_id = $"#{CarouselId}"
+})

@@ -1,0 +1,189 @@
+﻿@using WebApplicationDbFacadeBS5Template.Extensions
+@{
+    var ApplicationUser = User as WebApplicationDbFacadeBS5Template.Identity.CommonPrincipal;
+    var ControllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+    var CurrentAction = this.ViewContext.RouteData.Values["action"].ToString();
+    bool darkMode = ViewBag.DarkMode;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - @Html.ApplicationNameEnvironment()</title>
+    @ThemeStyles.Render(ApplicationConfiguration.DefaultTheme, darkMode)
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body data-session-timout-warning="@Saml2TokenConfiguration.TimeoutWarning" data-session-expire-date="@ViewBag.SessionExpireDate">
+    <div aria-live="polite" aria-atomic="true" class="position-relative container-fluid px-0">
+        <div class="toast-container position-absolute top-0 end-0 p-3" style="z-index:3000;" data-bs="notification"></div>
+    </div>
+    <header class="container-fluid px-0">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-primary py-1">
+            <div class="container-fluid">
+                <a class="navbar-brand py-0" href="#" title="@ApplicationConfiguration.ApplicationName">
+                    <span class="row">
+                        <span class="col-auto align-self-center">
+                            <span class="image-logo-sm"></span>
+                        </span>
+                        <span class="col smaller ps-0 align-self-center">
+                            <span class="row">
+                                <span class="col-12">
+                                    <span class="h1 display-6 mb-0">@ApplicationConfiguration.ApplicationName</span>
+
+                                </span>
+                                <span class="col-12">
+                                    <span class="lead-sm mb-0">@ApplicationConfiguration.ApplicationDescription</span>
+                                </span>
+                            </span>
+                        </span>
+                    </span>
+                </a>
+                @{
+                    string UserDropdownId = Html.UniqueId();
+
+                    <ul class="navbar-nav ms-lg-auto mb-2 mb-lg-0">
+
+                        <li class="nav-item dropdown">
+                            <div class="row">
+                                <div class="col-12 align-self-center">
+                                    <a class="nav-link dropdown-toggle p-0" href="#" title="@User.Identity.Name" id="@UserDropdownId" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span class="d-inline-flex h4 text-light mb-0">
+                                            <span class="col-auto align-self-center">
+                                                @if (ViewBag.ProfilePictureFileGuid is Guid fileGuid)
+                                                {
+                                                    <span class="image-circle-35 border border-2 border-primary d-block text-center">
+                                                        @Html.ImageById(fileGuid, new { @class = "rounded" })
+                                                    </span>
+
+                                                }
+                                                else
+                                                {
+                                                    @Html.FaIcon("fa-user-circle")
+                                                }
+
+                                            </span>
+                                            <span class="col-auto align-self-center ms-1">@User.Identity.Name</span>
+                                        </span>
+
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
+                                        <li>@Html.ActionLink("Profile", "Index", "Profile", new {userGuid = ApplicationUser.ActingUserGuid, edit = true }, new { @class = "dropdown-item" })</li>
+                                        @if (ApplicationUser.IsProxyMode)
+                                        {
+                                            RouteValueDictionary routeValues = new RouteValueDictionary();
+                                            routeValues.Add(WebApplicationDbFacadeBS5Template.Services.Configuration.ApplicationConfiguration.ProxyEndParam, true);
+                                            <li>@Html.ActionLink("End Proxy Session", "Index", "Admin", routeValues, (new { @class = "dropdown-item" }).ToHtmlAttributesDictionary())</li>
+                                            <li><hr class="dropdown-divider"></li>
+                                        }
+                                        <li>@Html.ActionLink("Logout", "Logout", ControllerName, new { }, new { @class = "dropdown-item" })</li>
+                                        @{
+                                            RouteValueDictionary routeValuesDarkMode = new RouteValueDictionary();
+                                            string param = WebApplicationDbFacadeBS5Template.Services.Configuration.ApplicationConfiguration.DarkModeChangeParam;
+                                            routeValuesDarkMode.Add(param, !darkMode);
+
+                                            <li>@Html.ActionLink(darkMode ? "Use Normal Mode" : "Use Dark Mode", CurrentAction, ControllerName, routeValuesDarkMode, (new { @class = "dropdown-item" }).ToHtmlAttributesDictionary())</li>
+                                        }
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-12 align-self-center smaller text-light text-center">
+                                <span>@Html.FaIcon("fa-calendar")</span>
+                                <span class="ms-1 fst-italic">Last Login:</span>
+                                <span class="ms-1 fst-italic">@ApplicationUser.LastLoginDisplay</span>
+                                <span class="ms-1 fst-italic" data-bs="logout-countdown" data-format="mm:ss" data-bs-toggle="popover" title="Session End" data-bs-trigger="hover" data-bs-html="true" data-bs-content="<small>You will automatically be logged out when the session has expired</small>"></span>
+                            </div>
+                            @if (ApplicationUser.IsProxyMode)
+                            {
+                                <div class="col-12 align-self-center smallest text-primary text-center">
+                                    <span>@Html.FaIcon("fa-people-arrows")</span>
+                                    <span class="ms-1 fst-italic">Proxy With:</span>
+                                    <span class="ms-1 fst-italic">@ApplicationUser.Name</span>
+                                    <span class="ms-1 fst-italic">(@ApplicationUser.LastLogin)</span>
+                                </div>
+                            }
+
+                        </li>
+                    </ul>
+                }
+            </div>
+        </nav>
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary border-bottom border-dark py-0 smaller">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainMenu">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            @Html.ActionLink("Home", "Index", "Home", new { }, new { @class = "nav-link" })
+                        </li>
+                        @if (ApplicationUser.IsAdmin)
+                        {
+                            <li class="nav-item">
+                                @Html.ActionLink("Admin", "Index", "Admin", new { }, new { @class = "nav-link" })
+                            </li>
+                        }
+                        <li class="nav-item">
+                            @Html.ActionLink("Sandbox", "Sandbox", "Home", new { }, new { @class = "nav-link" })
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="alert alert-warning m-0 rounded-0 border-start-0 border-end-0 border-top-0 py-0" role="alert">
+            <div class="row align-content-center">
+                <div class="col-auto">
+                    @Html.FaIcon("fa-exclamation-triangle")
+                </div>
+                <div class="col text-center small">
+                    Application Global alert
+                </div>
+                <div class="col-auto text-right">
+                    @Html.FaIcon("fa-exclamation-triangle")
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="h-100 flex-shrink-0 container-fluid mt-2">
+        @RenderBody()
+    </main>
+    <footer class="footer px-0">
+        @*<div class="container-fluid bg-info py-2">
+                <div class="row align-content-center">
+                    <div class="col text-muted small text-center">
+                        @Html.ApplicationNameVersionEnvironment()
+                    </div>
+                </div>
+            </div>*@
+        <div class="container-fluid px-0">
+            <div class="alert alert-info m-0 rounded-0 border-start-0 border-end-0 border-bottom-0 py-2 small text-center" role="alert">
+                @Html.ApplicationNameVersionEnvironment()
+            </div>
+        </div>
+        <div class="container-fluid px-0">
+            <div class="alert alert-success-dark m-0 rounded-0 border-start-0 border-end-0 border-bottom-0 py-0 smaller text-center text-uppercase" role="alert">
+                A simple success alert—check it out!
+            </div>
+        </div>
+    </footer>
+    <!-- include base antiforgery token for js libraries looking for element -->
+    <form class="invisible" ajax-default>
+        @Html.AntiForgeryToken()
+        @Html.ActionLink("logout", "Logout", ControllerName, new { }, new { ajax_logout = true });
+        @Html.ActionLink("reload", CurrentAction, ControllerName, new { }, new { ajax_reload = true });
+    </form>
+    <div class="d-none">
+        @if (ViewBag.Errors is IEnumerable<Exception> errors)
+        {
+            foreach (var ex in errors)
+            {
+                <div data-bs="error" data-name="@ex.GetType()" data-message="@ex.Message"></div>
+            }
+        }
+    </div>
+    @ViewScripts.Render(ControllerName,CurrentAction)
+    @RenderSection("scripts", required: false)
+</body>
+</html>

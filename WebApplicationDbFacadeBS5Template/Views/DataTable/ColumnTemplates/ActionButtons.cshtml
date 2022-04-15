@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ActionButtonVM>
+@using WebApplicationDbFacadeBS5Template.Models.DataTable
+
+
+@if (Model.Count() > 0)
+{
+    <div class="btn-group btn-group-sm" role="group" aria-label="Actions">
+        @foreach (var button in Model)
+        {
+            string btnClass = string.IsNullOrWhiteSpace(button.ButtonClass) ? "btn-primary" : button.ButtonClass;
+            object htmlAttributes = button.HtmlAttributes != null ? button.HtmlAttributes : new { };
+            if (!string.IsNullOrWhiteSpace(button.Href))
+            {
+
+                <a href="@button.Href" class="btn @btnClass" data-bs-toggle="popover" title="@button.Title" data-bs-content="@button.Description" data-bs-trigger="hover" @Html.ToHtmlAttributesString(htmlAttributes)>
+
+                    @if (!string.IsNullOrWhiteSpace(button.Icon))
+                    {
+                        if (button.IconRight)
+                        {
+                            <span class="me-1">@button.Title</span>
+                            <i class="fa @button.Icon"></i>
+                        }
+                        else
+                        {
+                            <i class="fa @button.Icon"></i>
+                            <span class="ms-1">@button.Title</span>
+                        }
+                    }
+                    else
+                    {
+                        @button.Title
+                    }
+                </a>
+            }
+            else
+            {
+                <button type="button" class="btn @btnClass" row-action="@button.Action" data-bs-toggle="popover" title="@button.Title" data-bs-content="@button.Description" data-bs-trigger="hover" @Html.ToHtmlAttributesString(htmlAttributes)>
+
+                    @if (!string.IsNullOrWhiteSpace(button.Icon))
+                    {
+                        if (button.IconRight)
+                        {
+                            <span class="me-1">@button.Title</span>
+                            <i class="fa @button.Icon"></i>
+                        }
+                        else
+                        {
+                            <i class="fa @button.Icon"></i>
+                            <span class="ms-1">@button.Title</span>
+                        }
+                    }
+                    else
+                    {
+                        @button.Title
+                    }
+                </button>
+            }
+        }
+    </div>
+}
+

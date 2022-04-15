@@ -1,0 +1,84 @@
+﻿@using WebApplicationDbFacadeBS5Template.Extensions
+@{
+    var ApplicationUser = User as WebApplicationDbFacadeBS5Template.Identity.CommonPrincipal;
+    var ControllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+    var CurrentAction = this.ViewContext.RouteData.Values["action"].ToString();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - @Html.ApplicationNameEnvironment()</title>
+    @ThemeStyles.Render(ApplicationConfiguration.DefaultTheme)
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="container my-5">
+        <div class="row shadow-light border border-5 border-primary rounded-3">
+            <div class="col-12 d-lg-none bg-dark">
+                <div class="row">
+                    <div class="col-auto align-self-center">
+                        <span class="image-logo-sm"></span>
+                    </div>
+                    <div class="col smaller ps-0 align-self-center">
+                        <div class="row">
+                            <div class="col-12">
+                                <span class="h1 display-6 mb-0">@ApplicationConfiguration.ApplicationName</span>
+
+                            </div>
+                            <div class="col-12">
+                                <span class="lead-sm mb-0 text-light">@ApplicationConfiguration.ApplicationDescription</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-none d-lg-inline-flex col-lg-3 bg-dark text-center">
+                <div class="image-logo-xxl h-100 w-100"></div>
+            </div>
+            <div class="col-12 col-lg-9">
+                <div class="row bg-light">
+
+                    <div class="col-12 d-none d-lg-inline-flex border-bottom border-primary">
+                        <div class="row">
+                            <div class="col-12">
+                                <span class="h1 display-6 mb-0">@ApplicationConfiguration.ApplicationName</span>
+
+                            </div>
+                            <div class="col-12">
+                                <span class="lead-sm mb-0 text-white">@ApplicationConfiguration.ApplicationDescription</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12" style="min-height:400px;">
+                        @RenderBody()
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-12 px-0">
+                <div class="alert alert-info m-0 rounded-0 border-start-0 border-end-0 border-bottom-0 py-2 small text-center" role="alert">
+                    @Html.ApplicationNameVersionEnvironment()
+                </div>
+            </div>
+            <div class="col-12 px-0">
+                <div class="alert alert-success-dark m-0 rounded-0 border-start-0 border-end-0 border-bottom-0 py-0 smaller text-center text-uppercase" role="alert">
+                    A simple success alert—check it out!
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- include base antiforgery token for js libraries looking for element -->
+    <form class="invisible" ajax-default>
+        @Html.AntiForgeryToken()
+        @Html.ActionLink("logout", "Logout", ControllerName, new { }, new { ajax_logout = true });
+    </form>
+    @ViewScripts.Render(ControllerName, CurrentAction)
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+
+

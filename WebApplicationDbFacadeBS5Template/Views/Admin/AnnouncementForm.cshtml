@@ -1,0 +1,58 @@
+﻿@model WebApplicationDbFacadeBS5Template.Models.Admin.AnnouncementVM
+@{
+    string FormId = Html.UniqueId();
+}
+@using (Html.BeginForm(Model.Action, "Admin", FormMethod.Post, new { ajax = true, @id = FormId }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.AnnouncementGuid)
+    @Html.HiddenFor(m => m.ImageFileGuid)
+<div class="row mb-1">
+    @using (Html.BeginFormGroup(new { @class = "col-12" }))
+    {
+        @Html.FormControlLabelFor(m => m.Title, new { @class = "small" })
+        @Html.FormControlTextBoxFor(m => m.Title, new { @class = "form-control-sm" })
+        @Html.FormControlValidationMessageFor(m => m.Title)
+    }
+    @using (Html.BeginFormGroup(new { @class = "col-12" }))
+    {
+        @Html.FormControlLabelFor(m => m.Message, new { @class = "small" })
+        @Html.FormControlTextAreaFor(m => m.Message, 5, 1, new { @class = "form-control-sm" })
+        @Html.FormControlValidationMessageFor(m => m.Message)
+    }
+    @using (Html.BeginFormGroup(new { @class = "col-12" }))
+    {
+        @Html.FormControlLabelFor(m => m.PriorityCode, new { @class = "small" })
+        @Html.FormControlDropDownListFor(m => m.PriorityCode, Model.PrioritySelectList, new { @class = "form-select-sm" })
+        @Html.FormControlValidationMessageFor(m => m.PriorityCode)
+    }
+    @using (Html.BeginFormGroup(new { @class = "col-12" }))
+    {
+        @Html.FormControlLabelFor(m => m.ActiveDate, new { @class = "small" })
+        @Html.FormControlDateFor(m => m.ActiveDate, new { @class = "form-control-sm" })
+        @Html.FormControlValidationMessageFor(m => m.ActiveDate)
+    }
+    @using (Html.BeginFormGroup(new { @class = "col-12" }))
+    {
+        @Html.FormControlLabelFor(m => m.ExpireDate, new { @class = "small" })
+        @Html.FormControlDateFor(m => m.ExpireDate, new { @class = "form-control-sm" })
+        @Html.FormControlValidationMessageFor(m => m.ExpireDate)
+    }
+    @using (Html.BeginFormGroup(new { @class = "col-12" }))
+    {
+        @Html.FormControlLabelFor(m => m.Image, new { @class = "small" })
+        @Html.FormControlImageFileFor(m => m.Image, new { @class = "form-control-sm" })
+        @Html.FormControlValidationMessageFor(m => m.Image)
+    }
+    @if (Model.ImageFileGuid is Guid imageId)
+    {
+        <div class="col-12 py-2">
+            @Html.ImageById(imageId, new { @class = "d-block mx-auto", alt = "Announcment Image", style = "width:auto; height: 200px;" })
+        </div>        
+    }
+    @using (Html.BeginFormGroup(new { @class = "col-12 py-2 text-end" }))
+    {
+        @Html.SubmitButtonWithIcon("Add", "fa-plus", new { @class = "btn-primary" })
+    }
+</div>
+}

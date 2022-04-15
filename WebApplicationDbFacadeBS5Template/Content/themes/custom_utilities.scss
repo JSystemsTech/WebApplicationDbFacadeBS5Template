@@ -1,0 +1,19 @@
+﻿@import "../bootstrap/_functions.scss";
+@import "../bootstrap/_variables.scss";
+@import "../bootstrap/_mixins.scss";
+@import "../bootstrap/_utilities.scss";
+// scss-docs-start box-shadow-variables
+$box-shadow-light: 0 .5rem 1rem rgba($light, .15) !default;
+$box-shadow-sm-light: 0 .125rem .25rem rgba($light, .075) !default;
+$box-shadow-lg-light: 0 1rem 3rem rgba($light, .175) !default;
+$text-inverse-colors: map-loop($theme-colors, color-contrast, "$value");
+$utilities: map-merge( $utilities, ( 
+    "shadow-light": ( 
+    property: box-shadow, 
+    class: shadow-light, 
+    values: ( null: $box-shadow-light, sm: $box-shadow-sm-light, lg: $box-shadow-lg-light, none: none ) 
+), "text-inverse": ( 
+    property: color, 
+    class: text-inverse, 
+    values: $text-inverse-colors ) 
+) );

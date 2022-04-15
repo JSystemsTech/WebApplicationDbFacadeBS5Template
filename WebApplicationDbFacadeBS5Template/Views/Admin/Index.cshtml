@@ -1,0 +1,241 @@
+﻿@model WebApplicationDbFacadeBS5Template.Models.Admin.AdminDashboard
+@{
+    string ApplicationUseSearchWidgetContainerId = Html.UniqueId();
+    string ApplicationUseWidgetId = Html.UniqueId();
+    string ApplicationUseByDayWidgetId = Html.UniqueId();
+    string ApplicationUserCountWidgetId = Html.UniqueId();
+
+    string ApplicationErrorCountId = Html.UniqueId();
+    string ApplicationErrorWidgetId = Html.UniqueId();
+
+    string UserSearchWidgetContainerId = Html.UniqueId();
+    string ProxyUserSearchWidgetContainerId = Html.UniqueId();
+
+    string MetricsTabIdBase = Html.UniqueId();
+    string HealthTabIdBase = Html.UniqueId();
+    string UserManagementTabIdBase = Html.UniqueId();
+    string UserAccessManagementTabIdBase = Html.UniqueId();
+    string AnnouncmentManagementTabIdBase = Html.UniqueId();
+}
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="@(MetricsTabIdBase)Tab" data-bs-toggle="tab" data-bs-target="#@(MetricsTabIdBase)Content" type="button" role="tab" aria-controls="@(MetricsTabIdBase)Content" aria-selected="true">Metrics</button>
+        <button class="nav-link" id="@(HealthTabIdBase)Tab" data-bs-toggle="tab" data-bs-target="#@(HealthTabIdBase)Content" type="button" role="tab" aria-controls="@(HealthTabIdBase)Content" aria-selected="false">Application Health</button>
+        <button class="nav-link" id="@(UserManagementTabIdBase)Tab" data-bs-toggle="tab" data-bs-target="#@(UserManagementTabIdBase)Content" type="button" role="tab" aria-controls="@(UserManagementTabIdBase)Content" aria-selected="false">User Managment</button>
+        <button class="nav-link" id="@(UserAccessManagementTabIdBase)Tab" data-bs-toggle="tab" data-bs-target="#@(UserAccessManagementTabIdBase)Content" type="button" role="tab" aria-controls="@(UserAccessManagementTabIdBase)Content" aria-selected="false">User Access Managment</button>
+        <button class="nav-link" id="@(AnnouncmentManagementTabIdBase)Tab" data-bs-toggle="tab" data-bs-target="#@(AnnouncmentManagementTabIdBase)Content" type="button" role="tab" aria-controls="@(AnnouncmentManagementTabIdBase)Content" aria-selected="false">Annoucement Managment</button>
+    </div>
+</nav>
+<div class="tab-content mt-2">
+    <div class="tab-pane fade show active" id="@(MetricsTabIdBase)Content" role="tabpanel" aria-labelledby="@(MetricsTabIdBase)Tab">
+        <div class="row">
+            <div class="col-12 col-lg-4 mb-2">
+                <div class="card">
+                    <div class="card-body p-0" style="height: 200px;">
+                        <canvas id="@(ApplicationUserCountWidgetId)Chart" chart="doughnut" data-form="#@(ApplicationUserCountWidgetId)Form"></canvas>
+                    </div>
+                    <div class="card-body p-1 border-top">
+                        @using (Html.BeginForm("GetApplicationUserCount", "Admin", FormMethod.Post, new { id = $"{ApplicationUserCountWidgetId}Form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="row">
+                                <div class="col">
+                                    @Html.ButtonWithIcon("Refresh", "fa-sync-alt", new { @class = "btn-sm btn-primary w-100", refresh = true })
+                                </div>
+                                <div class="col">
+                                    <div id="@(ApplicationUserCountWidgetId)Modal"></div>
+                                    @Html.ButtonWithIcon("View Online Users", "fa-user-clock", new { id = $"{ApplicationUserCountWidgetId}ViewOnlineUsers", @class = "btn-sm btn-secondary w-100" })
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 mb-2">
+                <div class="card">
+                    <div class="card-body p-0" style="height: 200px;">
+                        <canvas id="@(ApplicationUseByDayWidgetId)Chart" chart="bar" data-form="#@(ApplicationUseByDayWidgetId)Form"></canvas>
+                    </div>
+                    <div class="card-body p-1 border-top">
+                        @using (Html.BeginForm("GetApplicationUseByDayMetrics", "Admin", FormMethod.Post, new { id = $"{ApplicationUseByDayWidgetId}Form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="row">
+                                <div class="col">
+                                    <label for="@(ApplicationUseByDayWidgetId)Code" class="form-label mb-1 smaller">Type</label>
+                                    <select class="form-select form-select-sm" aria-label="Select Type for data" name="code" id="@(ApplicationUseByDayWidgetId)Code">
+                                        <option value="LOGINS" selected>Number of Logins</option>
+                                        <option value="USERS">Number of Unique Users</option>
+                                        <option value="AVG">Average Session Length</option>
+                                        <option value="MIN">Minimum Session Length</option>
+                                        <option value="MAX">Maximum Session Length</option>
+                                        <option value="TOTAL">Total Time Logged In</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label for="@(ApplicationUseByDayWidgetId)LastNDays" class="form-label mb-1 smaller">Range</label>
+                                    <select class="form-select form-select-sm" aria-label="Select Range for data" name="lastNDays" id="@(ApplicationUseByDayWidgetId)LastNDays">
+                                        <option value="1" selected>Last 24 Hours</option>
+                                        <option value="7">Last Week</option>
+                                        <option value="30">Last Month</option>
+                                        <option value="365">Last Year</option>
+                                        <option value="730">Last 2 Years</option>
+                                        <option value="">All</option>
+                                    </select>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 mb-2">
+                <div class="card">
+                    <div class="card-body p-0" style="height: 200px;">
+                        <canvas id="@(ApplicationUseWidgetId)Chart" chart="line" data-fill="true" data-form="#@(ApplicationUseWidgetId)Form"></canvas>
+                    </div>
+                    <div class="card-body p-1 border-top">
+                        @using (Html.BeginForm("GetApplicationUseMetrics", "Admin", FormMethod.Post, new { id = $"{ApplicationUseWidgetId}Form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="row">
+                                <div class="col">
+                                    <label for="@(ApplicationUseWidgetId)Code" class="form-label mb-1 smaller">Type</label>
+                                    <select class="form-select form-select-sm" aria-label="Select Type for data" name="code" id="@(ApplicationUseWidgetId)Code">
+                                        <option value="H" selected>Hour</option>
+                                        <option value="W">Weekday</option>
+                                        <option value="M">Month</option>
+                                        <option value="D">Day of Month</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label for="@(ApplicationUseWidgetId)LastNDays" class="form-label mb-1 smaller">Range</label>
+                                    <select class="form-select form-select-sm" aria-label="Select Range for data" name="lastNDays" id="@(ApplicationUseWidgetId)LastNDays">
+                                        <option value="1" selected>Last 24 Hours</option>
+                                        <option value="7">Last Week</option>
+                                        <option value="30">Last Month</option>
+                                        <option value="365">Last Year</option>
+                                        <option value="730">Last 2 Years</option>
+                                        <option value="">All</option>
+                                    </select>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="@ApplicationUseSearchWidgetContainerId" class="col">
+                <h3>Application Use Search</h3>
+                @{Html.RenderPartial("ApplicationUseSearch", Model.UserSearchParameters);}
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="@(HealthTabIdBase)Content" role="tabpanel" aria-labelledby="@(HealthTabIdBase)Tab">
+        <div class="row">
+            <div class="col mb-2">
+                <div class="card">
+                    <div class="card-body p-0" style="height: 200px;">
+                        <canvas id="@(ApplicationErrorCountId)Chart" chart="line" data-fill="true" data-form="#@(ApplicationErrorCountId)Form"></canvas>
+                    </div>
+                    <div class="card-body p-1 border-top">
+                        @using (Html.BeginForm("GetApplicationErrorMetrics", "Admin", FormMethod.Post, new { id = $"{ApplicationErrorCountId}Form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="row">
+                                <div class="col">
+                                    <label for="@(ApplicationErrorCountId)LastNDays" class="form-label mb-1 smaller">Range</label>
+                                    <select class="form-select form-select-sm" aria-label="Select Range for data" name="lastNDays" id="@(ApplicationErrorCountId)LastNDays">
+                                        <option value="1" selected>Last 24 Hours</option>
+                                        <option value="7">Last Week</option>
+                                        <option value="30">Last Month</option>
+                                        <option value="365">Last Year</option>
+                                        <option value="730">Last 2 Years</option>
+                                        <option value="">All</option>
+                                    </select>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="@ApplicationErrorWidgetId" class="col">
+                @Html.DataTable(vm =>
+                {
+                    vm.OptionsUrl = ViewBag.DataTableOptions.GetApplicationErrorsOptions;
+                })
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="@(UserManagementTabIdBase)Content" role="tabpanel" aria-labelledby="@(UserManagementTabIdBase)Tab">
+        <div class="row">
+            <div id="@ProxyUserSearchWidgetContainerId" class="col-12 col-lg-8">
+                <h3>Proxy User Search</h3>
+                @{
+                    Model.UserSearchParameters.OptionsUrl = ViewBag.DataTableOptions.ProxyUserSearchOptions;
+                    Html.RenderPartial("UserSearchWidget", Model.UserSearchParameters);
+                }
+            </div>
+            <div class="col-12 col-lg-4">
+                <h3>Administrators</h3>
+                @Html.DataTable(vm =>
+                        {
+                            vm.OptionsUrl = ViewBag.DataTableOptions.AdminUserSearchOptions;
+                        })
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="@(UserAccessManagementTabIdBase)Content" role="tabpanel" aria-labelledby="@(UserAccessManagementTabIdBase)Tab">
+        <div class="row">
+            <div id="@UserSearchWidgetContainerId" class="col">
+                <h3>User Search</h3>
+                @{
+                    Model.UserSearchParameters.OptionsUrl = ViewBag.DataTableOptions.UserSearchOptions;
+                    Html.RenderPartial("UserSearchWidget", Model.UserSearchParameters);
+                }
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="@(AnnouncmentManagementTabIdBase)Content" role="tabpanel" aria-labelledby="@(AnnouncmentManagementTabIdBase)Tab">
+        <div class="row">
+            <div class="col">
+                <h3 class="row">
+                    <span class="col-auto">Announcment Management</span>
+                    <span class="col text-end">
+                        @{
+                            string AddAnnouncmentId = Html.UniqueId();
+                            string PreviewAnnouncmentsId = Html.UniqueId();
+                        }
+                        @Html.ButtonWithIcon("Add Announcement", "fa-plus", new { @class = "btn-primary", @id = AddAnnouncmentId })
+                        @Html.ButtonWithIcon("Preview Announcements", "fa-external", new { @class = "btn-secondary", @id = PreviewAnnouncmentsId })
+                    </span>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" id="@(AnnouncmentManagementTabIdBase)TableContainer">
+                @Html.DataTable(vm =>
+           {
+               vm.OptionsUrl = ViewBag.DataTableOptions.GetAnnouncmentsOptions;
+           })
+            </div>
+        </div>
+    </div>
+</div>
+@Html.RenderJsInitData(new
+{
+     data_user_search_widget_container_id = $"#{UserSearchWidgetContainerId}",
+     data_view_online_users_button_id = $"#{ApplicationUserCountWidgetId}ViewOnlineUsers",
+     data_view_online_users_url = Url.Action("ViewOnlineUsers"),
+     data_add_announcement_id = $"#{AddAnnouncmentId}",
+     data_add_announcement_form_url = Url.Action("AddAnnouncementForm"),
+     data_preview_announcement_id = $"#{PreviewAnnouncmentsId}",
+     data_preview_announcement_url = Url.Action("PreviewAnnouncements"),
+     data_announcement_management_table_container_id = $"#{AnnouncmentManagementTabIdBase}TableContainer"
+})

@@ -1,0 +1,225 @@
+﻿@import "../bootstrap/functions";
+@import "../bootstrap/mixins";
+
+$theme: "army-dark" !default;
+
+
+//
+// Color system
+//
+
+$white: #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #ebebeb !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #888 !default;
+$gray-700: #444 !default;
+$gray-800: #303030 !default;
+$gray-900: #222 !default;
+$black: #000 !default;
+
+$blue: #375a7f !default;
+$indigo: #6610f2 !default;
+$purple: #6f42c1 !default;
+$pink: #e83e8c !default;
+$red: #e74c3c !default;
+$orange: #fd7e14 !default;
+$yellow: #f39c12 !default;
+$green: #00bc8c !default;
+$teal: #20c997 !default;
+$cyan: #3498db !default;
+
+
+
+$dark-olive-drab: #494829 !default;
+$medium-green: #40492a !default;
+$natural-grey: #565656 !default;
+$insignia-white: #fffdf4 !default;
+$insignia-blue: #2a3141 !default;
+$insignia-red: #9b2f25 !default;
+$idetification-yellow: #f5ab30 !default;
+$sand: #7f5e4b !default;
+
+$primary: $idetification-yellow !default;
+$secondary: $natural-grey !default;
+$success: $dark-olive-drab !default;
+$info: $insignia-blue !default;
+$warning: $sand !default;
+$danger: $insignia-red !default;
+$light: $gray-300 !default;
+$dark: $black !default;
+$chart-label: $white !default;
+$chart-grid: $gray-700 !default;
+
+
+$min-contrast-ratio: 4.5 !default;
+
+// Customize the light and dark text colors for use in our color contrast function.
+$color-contrast-dark: $black !default;
+$color-contrast-light: $white !default;
+
+// Body
+
+$body-bg: $black !default;
+$body-color: $insignia-white !default;
+
+// Links
+
+$link-color: $primary !default;
+
+// Tables
+
+$table-accent-bg: rgba($white, .25) !default;
+$table-border-color: rgba($white, .5) !default;
+
+$table-bg-scale: 0 !default;
+
+$table-cell-padding-y: .5rem !default;
+$table-cell-padding-x: .5rem !default;
+$table-cell-padding-y-sm: .25rem !default;
+$table-cell-padding-x-sm: .25rem !default;
+
+$table-cell-vertical-align: top !default;
+
+$table-color: $body-color !default;
+$table-bg: transparent !default;
+
+$table-th-font-weight: null !default;
+
+$table-striped-color: $table-color !default;
+$table-striped-bg-factor: .15 !default;
+$table-striped-bg: rgba($white, $table-striped-bg-factor) !default;
+
+$table-active-color: $table-color !default;
+$table-active-bg-factor: .3 !default;
+$table-active-bg: rgba($white, $table-active-bg-factor) !default;
+
+$table-hover-color: $table-color !default;
+$table-hover-bg-factor: .4 !default;
+$table-hover-bg: rgba($white, $table-hover-bg-factor) !default;
+
+
+
+
+
+// Forms
+
+$input-bg: $gray-400 !default;
+$input-color: $gray-800 !default;
+$input-border-color: $body-color !default;
+$input-group-addon-color: $gray-500 !default;
+$input-group-addon-bg: $gray-700 !default;
+
+$form-check-input-bg: $white !default;
+$form-check-input-border: none !default;
+
+$form-file-button-color: $white !default;
+
+// Dropdowns
+
+$dropdown-bg: $body-bg !default;
+$dropdown-border-color: $body-color !default;
+$dropdown-divider-bg: darken($body-color, 15%) !default;
+$dropdown-link-color: $body-color !default;
+$dropdown-link-hover-color: color-contrast($primary) !default;
+$dropdown-link-hover-bg: $primary !default;
+
+// Navs
+
+$nav-link-padding-x: 2rem !default;
+$nav-link-disabled-color: $gray-500 !default;
+$nav-tabs-border-color: $gray-700 !default;
+$nav-tabs-link-hover-border-color: $nav-tabs-border-color $nav-tabs-border-color transparent !default;
+$nav-tabs-link-active-color: $white !default;
+$nav-tabs-link-active-border-color: $nav-tabs-border-color $nav-tabs-border-color transparent !default;
+
+// Navbar
+
+$navbar-light-background-color: $light !default;
+$navbar-dark-background-color: $dark !default;
+
+$navbar-dark-color: rgba(color-contrast($navbar-dark-background-color),0.6) !default;
+$navbar-dark-hover-color: color-contrast($navbar-dark-background-color) !default;
+$navbar-light-color: color-contrast($navbar-light-background-color) !default;
+$navbar-light-hover-color: darken(color-contrast($navbar-light-background-color), 15%) !default;
+$navbar-light-active-color: darken(color-contrast($navbar-light-background-color), 25%) !default;
+$navbar-light-toggler-border-color: rgba(color-contrast($navbar-light-background-color), .1) !default;
+
+
+// Pagination
+
+$pagination-color: $white !default;
+$pagination-bg: $primary !default;
+$pagination-border-width: 0 !default;
+$pagination-border-color: transparent !default;
+$pagination-hover-color: $white !default;
+$pagination-hover-bg: lighten($primary, 10%) !default;
+$pagination-hover-border-color: transparent !default;
+$pagination-active-bg: $pagination-hover-bg !default;
+$pagination-active-border-color: transparent !default;
+$pagination-disabled-color: $white !default;
+$pagination-disabled-bg: darken($primary, 15%) !default;
+$pagination-disabled-border-color: transparent !default;
+
+// Cards
+
+$card-cap-bg: rgba($white, .05) !default;
+$card-bg: rgba($white, .1) !default;
+
+// Popovers
+
+$popover-bg: $light !default;
+$popover-header-bg: $primary !default;
+
+//Tooltips
+$tooltip-color: color-contrast($light) !default;
+$tooltip-bg: $light !default;
+
+// Toasts
+
+$toast-background-color: $gray-700 !default;
+$toast-header-background-color: $gray-800 !default;
+
+// Modals
+
+$modal-content-bg: $gray-800 !default;
+$modal-content-border-color: $gray-700 !default;
+$modal-header-border-color: $gray-700 !default;
+
+// Progress bars
+
+$progress-bg: $gray-700 !default;
+
+// List group
+
+$list-group-color: $body-color !default;
+$list-group-bg: $gray-800 !default;
+$list-group-border-color: $gray-700 !default;
+$list-group-hover-bg: $gray-700 !default;
+$list-group-action-hover-color: $list-group-color !default;
+$list-group-action-active-bg: $gray-900 !default;
+
+// Breadcrumbs
+
+$breadcrumb-padding-y: .375rem !default;
+$breadcrumb-padding-x: .75rem !default;
+$breadcrumb-bg: $gray-700 !default;
+$breadcrumb-border-radius: .25rem !default;
+
+// Close
+
+$btn-close-color: $white !default;
+$btn-close-opacity: .4 !default;
+$btn-close-hover-opacity: 1 !default;
+
+// Code
+
+$pre-color: inherit !default;
+
+
+// Buttons
+$input-btn-border-width: 2px !default;
+$button-border-color-shift: 20% !default;
+

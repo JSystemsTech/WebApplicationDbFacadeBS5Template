@@ -1,0 +1,14 @@
+﻿[
+  {
+    "outputFile": "Content/themes/default.css",
+    "inputFile": "Content/themes/default.scss"
+  },
+  {
+    "outputFile": "Content/themes/army.css",
+    "inputFile": "Content/themes/army.scss"
+  },
+  {
+    "outputFile": "Content/themes/army_dark.css",
+    "inputFile": "Content/themes/army_dark.scss"
+  }
+]

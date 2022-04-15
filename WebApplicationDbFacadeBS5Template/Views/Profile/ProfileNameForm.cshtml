@@ -1,0 +1,47 @@
+﻿@model WebApplicationDbFacadeBS5Template.Models.Profile.UserProfileNameVM
+@{
+    string FormId = Html.UniqueId();
+}
+@using (Html.BeginForm("UpdateName", "Profile", FormMethod.Post, new { ajax = true, @id = FormId }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.UserGuid)
+    @Html.HiddenFor(m => m.ImageFileGuid)
+<div class="row mb-1">
+    @using (Html.BeginFormGroup(new { @class = "col-12" }))
+    {
+        @Html.FormControlLabelFor(m => m.FirstName, new { @class = "small" })
+        @Html.FormControlTextBoxFor(m => m.FirstName, new { @class = "form-control-sm" })
+        @Html.FormControlValidationMessageFor(m => m.FirstName)
+    }
+    @using (Html.BeginFormGroup(new { @class = "col-12" }))
+    {
+        @Html.FormControlLabelFor(m => m.MiddleInitial, new { @class = "small" })
+        @Html.FormControlTextBoxFor(m => m.MiddleInitial, new { maxlength = 1, @class = "form-control-sm" })
+        @Html.FormControlValidationMessageFor(m => m.MiddleInitial)
+    }
+    @using (Html.BeginFormGroup(new { @class = "col-12" }))
+    {
+        @Html.FormControlLabelFor(m => m.LastName, new { @class = "small" })
+        @Html.FormControlTextBoxFor(m => m.LastName, new { @class = "form-control-sm" })
+        @Html.FormControlValidationMessageFor(m => m.LastName)
+    }
+    
+    @using (Html.BeginFormGroup(new { @class = "col-12" }))
+    {
+        @Html.FormControlLabelFor(m => m.Image, new { @class = "small" })
+        @Html.FormControlImageFileFor(m => m.Image, new { @class = "form-control-sm" })
+        @Html.FormControlValidationMessageFor(m => m.Image)
+    }
+    @if (Model.ImageFileGuid is Guid imageId)
+    {
+        <div class="col-12 py-2">
+            @Html.ImageById(imageId, new { @class = "d-block mx-auto", alt = "Profile Image", style = "width:auto; height: 200px;" })
+        </div>
+    }
+    @using (Html.BeginFormGroup(new { @class = "col-12 py-2 text-end" }))
+    {
+        @Html.SubmitButtonWithIcon("Save", "fa-check", new { @class = "btn-primary" })
+    }
+</div>
+}

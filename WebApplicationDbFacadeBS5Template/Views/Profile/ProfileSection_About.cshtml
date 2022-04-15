@@ -1,0 +1,127 @@
+﻿@model WebApplicationDbFacadeBS5Template.Models.Profile.UserProfileAboutVM
+
+@if (ViewBag.Edit == true)
+{
+    string FormId = Html.UniqueId();
+    using (Html.BeginForm("UpdateAbout", "Profile", FormMethod.Post, new { ajax = true, @id = FormId }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.UserGuid)
+
+        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+            <div class="col mb-2">
+                <div class="card">
+                    <div class="card-header">General</div>
+                    <div class="card-body">
+                        @using (Html.BeginFormGroup())
+                        {
+                            @Html.FormControlLabelFor(m => m.DateOfBirth, new { @class = "small" })
+                            @Html.FormControlDateFor(m => m.DateOfBirth, new { @class = "form-control-sm" })
+                            @Html.FormControlValidationMessageFor(m => m.DateOfBirth)
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-2">
+                <div class="card">
+                    <div class="card-header">Contact</div>
+                    <div class="card-body">
+                        @using (Html.BeginFormGroup())
+                        {
+                            @Html.FormControlLabelFor(m => m.Email, new { @class = "small" })
+                            @Html.FormControlTextBoxFor(m => m.Email, new { @class = "form-control-sm", @type = "email" })
+                            @Html.FormControlValidationMessageFor(m => m.Email)
+                        }
+                        @using (Html.BeginFormGroup())
+                        {
+                            @Html.FormControlLabelFor(m => m.PhoneNumber, new { @class = "small" })
+                            @Html.FormControlTextBoxFor(m => m.PhoneNumber, new { @class = "form-control-sm", maxlength = 10 })
+                            @Html.FormControlValidationMessageFor(m => m.PhoneNumber)
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-2">
+                <div class="card">
+                    <div class="card-header">Home Address</div>
+                    <div class="card-body">
+                        @using (Html.BeginFormGroup())
+                        {
+                            @Html.FormControlLabelFor(m => m.HomeAddressStreet, new { @class = "small" })
+                            @Html.FormControlTextBoxFor(m => m.HomeAddressStreet, new { @class = "form-control-sm" })
+                            @Html.FormControlValidationMessageFor(m => m.HomeAddressStreet)
+                        }
+                        @using (Html.BeginFormGroup())
+                        {
+                            @Html.FormControlLabelFor(m => m.HomeAddressStreet2, new { @class = "small" })
+                            @Html.FormControlTextBoxFor(m => m.HomeAddressStreet2, new { @class = "form-control-sm" })
+                            @Html.FormControlValidationMessageFor(m => m.HomeAddressStreet2)
+                        }
+                        @using (Html.BeginFormGroup())
+                        {
+                            @Html.FormControlLabelFor(m => m.HomeAddressCity, new { @class = "small" })
+                            @Html.FormControlTextBoxFor(m => m.HomeAddressCity, new { @class = "form-control-sm" })
+                            @Html.FormControlValidationMessageFor(m => m.HomeAddressCity)
+                        }
+                        @using (Html.BeginFormGroup())
+                        {
+                            @Html.FormControlLabelFor(m => m.StateGuid, new { @class = "small" })
+                            @Html.FormControlDropDownListFor(m => m.StateGuid,Model.StateSelectList, new { @class = "form-select-sm", data_bs_toggle="select" })
+                            @Html.FormControlValidationMessageFor(m => m.StateGuid)
+                        }
+                        @using (Html.BeginFormGroup())
+                        {
+                            @Html.FormControlLabelFor(m => m.HomeAddressCountry, new { @class = "small" })
+                            @Html.FormControlTextBoxFor(m => m.HomeAddressCountry, new { @class = "form-control-sm" })
+                            @Html.FormControlValidationMessageFor(m => m.HomeAddressCountry)
+                        }
+                        @using (Html.BeginFormGroup())
+                        {
+                            @Html.FormControlLabelFor(m => m.HomeAddressZIP, new { @class = "small" })
+                            @Html.FormControlTextBoxFor(m => m.HomeAddressZIP, new { @class = "form-control-sm", maxlength = 5 })
+                            @Html.FormControlValidationMessageFor(m => m.HomeAddressZIP)
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-end">@Html.SubmitButtonWithIcon("Save", "fa-save", new { @class = "btn-primary btn-lg" })</div>
+        </div>
+    }
+}
+else
+{
+    <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+        <div class="col mb-2">
+            <div class="card">
+                <div class="card-header">General</div>
+                <div class="card-body">
+                    <div><b class="me-1">Date of Birth</b>: @Model.DateOfBirth.ToString("MM/dd/yyyy")</div>
+                </div>
+            </div>
+        </div>
+        <div class="col mb-2">
+            <div class="card">
+                <div class="card-header">Contact</div>
+                <div class="card-body">
+                    <div><b class="me-1">Email</b>: @Model.Email</div>
+                    <div><b class="me-1">Phone</b>: @Model.PhoneNumber</div>
+                </div>
+            </div>
+        </div>
+        <div class="col mb-2">
+            <div class="card">
+                <div class="card-header">Home Address</div>
+                <div class="card-body">
+                    <div><b class="me-1">Street</b>: @Model.HomeAddressStreet</div>
+                    <div><b class="me-1">Street 2</b>: @Model.HomeAddressStreet2</div>
+                    <div><b class="me-1">City</b>: @Model.HomeAddressCity</div>
+                    <div><b class="me-1">State</b>: @Model.StateName</div>
+                    <div><b class="me-1">Country</b>: @Model.HomeAddressCountry</div>
+                    <div><b class="me-1">ZIP</b>: @Model.HomeAddressZIP</div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

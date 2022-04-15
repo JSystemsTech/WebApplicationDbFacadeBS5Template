@@ -1,0 +1,31 @@
+﻿@model WebApplicationDbFacadeBS5Template.Models.ListManagementVM
+@{ 
+    int index = 0;
+}
+<form class="list-group" data-bs-toggle="checklist" data-url="@Model.Url">
+    <div class="d-none h-100 w-100 position-absolute bg-dark bg-opacity-25 text-center" style="z-index:2000;left:0;top:0" data-toggle="mask">
+        <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;" role="status" title="Processing ...">
+        <span class="visually-hidden">Processing ...</span>
+        </div>
+    </div>
+        @Html.AntiForgeryToken()
+        @foreach (var item in Model.Items)
+        {
+            @Html.Hidden($"Items[{index}].Value", item.Value);
+            if (item.Selected)
+            {
+                <label class="list-group-item" data-bs-toggle="popover" data-bs-trigger="hover" title="@item.Name" data-bs-content="@item.Description">
+                    <input name="Items[@(index)].Selected" class="form-check-input me-1" type="checkbox" checked>
+                    @item.Name
+                </label>
+            }
+            else
+            {
+                <label class="list-group-item" data-bs-toggle="popover" data-bs-trigger="hover" title="@item.Name" data-bs-content="@item.Description">
+                    <input name="Items[@(index)].Selected" class="form-check-input me-1" type="checkbox">
+                    @item.Name
+                </label>
+            }
+            index++;
+        }
+</form>

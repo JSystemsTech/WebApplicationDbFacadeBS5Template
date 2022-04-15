@@ -1,0 +1,72 @@
+﻿@model WebApplicationDbFacadeBS5Template.Models.Profile.UserProfileVM
+
+@{
+    ViewBag.Title = "Index";
+    string nameEditButtonId = Html.UniqueId();
+    string listId = Html.UniqueId();
+}
+
+<div class="row h-100" style="min-height:max-content;">
+    <div class="col-12 col-md-4 col-xl-3 mb-1 bg-info px-md-0">
+        <div class="w-100 text-center">
+            @if (Model.ImageFileGuid is Guid fileGuid)
+            {
+                <div class="image-circle-200 border border-3 border-primary mx-auto my-2">
+                    @Html.ImageById(fileGuid, new { @class = "rounded", alt = $"{Model.Name}'s Profile picture" })
+                </div>
+
+            }
+            else
+            {
+                <i class="fas fa-user-circle text-light" style="opacity:0.15; font-size:15em;"></i>
+            }
+
+        </div>
+        <div class="row">
+            <div class="col align-self-center">
+                <h2 class="mb-0">@Model.Name</h2>
+            </div>
+            @if (ViewBag.Edit)
+            {
+                <div class="col-auto align-self-center text-end">
+                    <button id="@nameEditButtonId" class="btn btn-link text-light" style="opacity:0.35;">Edit</button>
+                </div>
+            }
+
+        </div>
+        <div class="list-group list-group-flush list-group-nav-info" id="list-tab" role="tablist">
+            @foreach (var tab in Model.Tabs)
+            {
+                string activeClass = tab.IsActive ? " active" : "";
+                <a class="list-group-item list-group-item-action@(activeClass)" id="@tab.TabId" data-bs-toggle="list" data-content-url="@tab.ContentUrl" href="#@(tab.ContainerId)" role="tab" aria-controls="@(tab.ContainerId)">@tab.Name</a>
+            }
+        </div>
+    </div>
+    <div class="col-12 col-md-8 col-xl-9 mb-1" style="min-height:600px;">
+        <div class="tab-content w-100 h-100">
+            @foreach (var tab in Model.Tabs)
+            {
+                string activeClass = tab.IsActive ? " show active" : "";
+                <div class="h-100 w-100 tab-pane fade@(activeClass)" id="@tab.ContainerId" role="tabpanel" aria-labelledby="@tab.TabId">
+                    <div class="row row-cols-1 flex-column" style="min-height:100vh;">
+                        <div class="col">
+                            <h1>@tab.Name</h1>
+                        </div>
+                        <div class="col" style="flex:1;" tab-content-container>
+                            <div class="d-flex flex-column w-100 bg-dark bg-opacity-25" style="min-height:100vh;" data-toggle="mask">
+                                <span class="visually-hidden">Loading @tab.Name</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@Html.RenderJsInitData(new
+{
+    data_name_edit_button_id = $"#{nameEditButtonId}",
+    data_name_edit_url = Url.Action("ProfileNameForm", new { userGuid = Model.UserGuid }),
+    data_edit = ViewBag.Edit.ToString().ToLower()
+})
+

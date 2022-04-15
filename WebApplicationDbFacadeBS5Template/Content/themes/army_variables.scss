@@ -1,0 +1,75 @@
+﻿
+$theme: "army" !default;
+
+//
+// Color system
+//
+
+$white: #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #868e96 !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black: #000 !default;
+
+$blue: #033c73 !default;
+$indigo: #6610f2 !default;
+$purple: #6f42c1 !default;
+$pink: #e83e8c !default;
+$red: #c71c22 !default;
+$orange: #fd7e14 !default;
+$yellow: #dd5600 !default;
+$green: #73a839 !default;
+$teal: #20c997 !default;
+$cyan: #2fa4e7 !default;
+
+$dark-olive-drab: #494829 !default;
+$medium-green: #40492a !default;
+$natural-grey: #565656 !default;
+$insignia-white: #fffdf4 !default;
+$insignia-blue: #2a3141 !default;
+$insignia-red: #9b2f25 !default;
+$idetification-yellow: #f5ab30 !default;
+$sand: #7f5e4b !default;
+
+$primary: $idetification-yellow !default;
+$secondary: $natural-grey !default;
+$success: $medium-green !default;
+$info: $insignia-blue !default;
+$warning: $sand !default;
+$danger: $insignia-red !default;
+$light: $insignia-white !default;
+$dark: $black !default;
+$chart-label: $black !default;
+$chart-grid: $gray-300 !default;
+
+
+$min-contrast-ratio: 2.75 !default;
+
+// Body
+
+$body-color: $gray-700 !default;
+
+// Fonts
+
+$headings-color: $idetification-yellow !default;
+
+// Dropdowns
+
+$dropdown-link-color: $body-color !default;
+
+// Navbar
+
+$navbar-dark-color: rgba($white, .8) !default;
+$navbar-dark-hover-color: $white !default;
+
+// Alert
+$alert-bg-scale: -60% !default;
+$alert-border-scale: -50% !default;
+$alert-color-scale: 60% !default;
+

@@ -1,0 +1,64 @@
+﻿@model WebApplicationDbFacadeBS5Template.DomainLayer.Models.Parameters.UserSearchParameters
+    @{ 
+        string FormId = Html.UniqueId();
+        string RangeId = Html.UniqueId();
+    }
+<form id="@FormId" class="p-2 d-none">
+    @Html.AntiForgeryToken()
+    <div class="row mb-1">
+        @using (Html.BeginFormGroup(new { @class = "col-12" }))
+        {
+            @Html.FormControlLabelFor(m => m.FirstName, new { @class = "small" })
+            @Html.FormControlTextBoxFor(m => m.FirstName, new { trigger_dt_refresh = true, @class = "form-control-sm" })
+            @Html.FormControlValidationMessageFor(m => m.FirstName)
+        }
+        @using (Html.BeginFormGroup(new { @class = "col-12" }))
+        {
+            @Html.FormControlLabelFor(m => m.MiddleInitial, new { @class = "small" })
+            @Html.FormControlTextBoxFor(m => m.MiddleInitial, new { maxlength = 1, trigger_dt_refresh = true, @class = "form-control-sm" })
+            @Html.FormControlValidationMessageFor(m => m.MiddleInitial)
+        }
+        @using (Html.BeginFormGroup(new { @class = "col-12" }))
+        {
+            @Html.FormControlLabelFor(m => m.LastName, new { @class = "small" })
+            @Html.FormControlTextBoxFor(m => m.LastName, new { trigger_dt_refresh = true, @class = "form-control-sm" })
+            @Html.FormControlValidationMessageFor(m => m.LastName)
+        }
+    </div>
+    <div class="row mb-1">
+        @using (Html.BeginFormGroup(new { @class = "col-12" }))
+        {
+            @Html.FormControlLabelFor(m => m.Email, new { @class = "small" })
+            @Html.FormControlTextBoxFor(m => m.Email, new { type = "email", maxlength = 256, trigger_dt_refresh = true, @class = "form-control-sm" })
+            @Html.FormControlValidationMessageFor(m => m.Email)
+        }
+        @using (Html.BeginFormGroup(new { @class = "col-12" }))
+        {
+            @Html.FormControlLabelFor(m => m.EDIPI, new { @class = "small" })
+            @Html.FormControlTextBoxFor(m => m.EDIPI, new { maxlength = 10, trigger_dt_refresh = true, @class = "form-control-sm" })
+            @Html.FormControlValidationMessageFor(m => m.EDIPI)
+        }
+        @using (Html.BeginFormGroup(new { @class = "col-12" }))
+        {
+            <label for="@(RangeId)" class="form-label small">Range</label>
+            <select class="form-select form-select-sm" aria-label="Select Range for data" name="LastNDays" id="@(RangeId)" trigger-dt-refresh="true">
+                <option value="1" selected>Last 24 Hours</option>
+                <option value="7">Last Week</option>
+                <option value="30">Last Month</option>
+                <option value="365">Last Year</option>
+                <option value="730">Last 2 Years</option>
+                <option value="">All</option>
+            </select>
+        }
+    </div>
+</form>
+<div class="row">
+    <div class="col">
+        @Html.DataTable(vm =>
+        {
+            vm.Form = $"#{FormId}";
+            vm.OptionsUrl = ViewBag.DataTableOptions.ApplicationUseSearchOptions;
+            vm.AppendForm = true;
+        })
+    </div>
+</div>

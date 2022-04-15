@@ -1,0 +1,9 @@
+﻿@model (string name, Guid? fileId, bool useDefault)
+@if (Model.fileId is Guid guid)
+{
+    @Html.ImageById(guid, new { alt = Model.name, style = "height:auto; max-width:100px;" })
+}
+else if(Model.useDefault)
+{
+<img src="~/Content/images/logo.png" style="height:auto; max-width:100px;" />
+}

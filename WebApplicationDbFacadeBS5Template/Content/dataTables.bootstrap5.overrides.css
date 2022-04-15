@@ -1,0 +1,24 @@
+﻿.card table.dataTable {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+.card table.table-bordered.dataTable th:first-child, 
+.card table.table-bordered.dataTable td:first-child {
+    border-left-width: 0;
+}
+
+.card table.table-bordered.dataTable th:last-child,
+.card table.table-bordered.dataTable td:last-child {
+    border-right-width: 0;
+}
+div.dataTables_wrapper div.dataTables_filter .dropdown-menu label {
+    font-weight: unset;
+    white-space: unset;
+    text-align: unset;
+    display: block;
+}
+div.dataTables_wrapper div.dataTables_filter .dropdown-menu input {
+    margin-left: 0;
+    display: block;
+    width: 100%;
+}

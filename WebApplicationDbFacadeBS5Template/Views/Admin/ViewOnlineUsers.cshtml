@@ -1,0 +1,8 @@
+﻿<div class="row">
+    <div class="col">
+        @Html.DataTable(vm =>
+        {
+            vm.OptionsUrl = ViewBag.DataTableOptions.GetOnlineUsersOptions;
+        })
+    </div>
+</div>

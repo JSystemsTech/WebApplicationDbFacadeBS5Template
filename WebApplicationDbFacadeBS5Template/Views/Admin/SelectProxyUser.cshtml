@@ -1,0 +1,8 @@
+﻿@model WebApplicationDbFacadeBS5Template.DomainLayer.Models.Data.UserSearchResult
+
+@using (Html.BeginForm("BeginProxy", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ProxyRequestToken(Model.Guid)
+    @Html.SubmitButtonWithIcon("Begin Proxy", new { @class = "btn-sm btn-primary" });
+}

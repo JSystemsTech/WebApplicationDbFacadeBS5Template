@@ -1,0 +1,70 @@
+﻿@model IEnumerable<WebApplicationDbFacadeBS5Template.Models.Admin.AnnouncementVM>
+@{
+    string CarouselId = Html.UniqueId();
+}
+<div id="@CarouselId" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="false">
+    <div class="carousel-indicators">
+        @{
+            int i = 0;
+            foreach (var announcement in Model)
+            {
+                if (announcement.AnnouncementGuid == Model.First().AnnouncementGuid)
+                {
+                    <button type="button" data-bs-target="#@(CarouselId)" data-bs-slide-to="@i" class="active" aria-current="true" aria-label="@announcement.Title"></button>
+                }
+                else
+                {
+                    <button type="button" data-bs-target="#@(CarouselId)" data-bs-slide-to="@i" aria-label="@announcement.Title"></button>
+                }
+                i++;
+            }
+        }
+    </div>
+    <div class="carousel-inner">
+        @foreach (var announcement in Model)
+        {
+            string activeClass = announcement.AnnouncementGuid == Model.First().AnnouncementGuid ? " active" : "";
+        <div class="carousel-item@(activeClass) bg-secondary bg-gradient">
+            <div class="img-gradient mx-auto w-100 w-md-50" style="height:400px;">
+                @if (announcement.ImageFileGuid is Guid imageId)
+                {
+                    @Html.ImageById(imageId, new { @class = "d-block mx-auto", alt = announcement.Title, style = "width:100%; height: auto;" });
+                }
+                else
+                {
+
+                    <img class="d-block mx-auto" src="~/Content/images/logo.png" alt="@(announcement.Title)" style="width: 100%; height: auto;" />
+                }
+
+                
+            </div>   
+            <div class="carousel-caption">
+                @if (announcement.PriorityCode == "H")
+                {
+                    <div class="row d-inline-flex">
+                        <div class="col-auto text-start align-self-center"><i class="fas fa-exclamation-triangle fa-3x"></i></div>
+                        <div class="col text-center align-self-center">
+                            <h5>@announcement.Title</h5>
+                            <small>@Html.Linkify(announcement.Message)</small>
+                        </div>
+                        <div class="col-auto text-end align-self-center"><i class="fas fa-exclamation-triangle fa-3x"></i></div>
+                    </div>
+                }
+                else
+                {
+                    <h5>@announcement.Title</h5>
+                    <small>@Html.Linkify(announcement.Message)</small>
+                }
+            </div>
+        </div>
+        }
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#@(CarouselId)" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#@(CarouselId)" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>

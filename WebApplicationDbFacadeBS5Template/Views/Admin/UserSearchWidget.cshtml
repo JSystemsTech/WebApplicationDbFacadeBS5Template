@@ -1,0 +1,49 @@
+﻿@model WebApplicationDbFacadeBS5Template.DomainLayer.Models.Parameters.UserSearchParameters
+    @{ 
+        string FormId = Html.UniqueId();
+    }
+<form id="@FormId" class="p-2 d-none">
+    @Html.AntiForgeryToken()
+    <div class="row mb-1">
+        @using (Html.BeginFormGroup(new { @class = "col-12" }))
+        {
+            @Html.FormControlLabelFor(m => m.FirstName, new { @class = "small" })
+            @Html.FormControlTextBoxFor(m => m.FirstName, new { trigger_dt_refresh = true, @class = "form-control-sm" })
+            @Html.FormControlValidationMessageFor(m => m.FirstName)
+        }
+        @using (Html.BeginFormGroup(new { @class = "col-12" }))
+        {
+            @Html.FormControlLabelFor(m => m.MiddleInitial, new { @class = "small" })
+            @Html.FormControlTextBoxFor(m => m.MiddleInitial, new { trigger_dt_refresh = true, @class = "form-control-sm" })
+            @Html.FormControlValidationMessageFor(m => m.MiddleInitial)
+        }
+        @using (Html.BeginFormGroup(new { @class = "col-12" }))
+        {
+            @Html.FormControlLabelFor(m => m.LastName, new { @class = "small" })
+            @Html.FormControlTextBoxFor(m => m.LastName, new { trigger_dt_refresh = true, type = "email", @class = "form-control-sm" })
+            @Html.FormControlValidationMessageFor(m => m.LastName)
+        }
+        @using (Html.BeginFormGroup(new { @class = "col-12" }))
+        {
+            @Html.FormControlLabelFor(m => m.Email, new { @class = "small" })
+            @Html.FormControlTextBoxFor(m => m.Email, new { trigger_dt_refresh = true, @class = "form-control-sm" })
+            @Html.FormControlValidationMessageFor(m => m.Email)
+        }
+        @using (Html.BeginFormGroup(new { @class = "col-12" }))
+        {
+            @Html.FormControlLabelFor(m => m.EDIPI, new { @class = "small" })
+            @Html.FormControlTextBoxFor(m => m.EDIPI, new { trigger_dt_refresh = true, @class = "form-control-sm" })
+            @Html.FormControlValidationMessageFor(m => m.EDIPI)
+        }
+    </div>
+</form>
+<div class="row">
+    <div class="col">
+        @Html.DataTable(vm =>
+   {
+       vm.Form = $"#{FormId}";
+       vm.OptionsUrl = Model.OptionsUrl;
+       vm.AppendForm = true;
+   })
+    </div>
+</div>

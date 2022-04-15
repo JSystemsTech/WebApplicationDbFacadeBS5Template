@@ -1,0 +1,88 @@
+﻿@import "custom_color.scss";
+@import "custom_utilities.scss";
+
+@function create-font-base($font: system-ui) {
+    @return $font, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+$font-family-sans-serif: create-font-base("Arial");
+
+.smaller {
+    font-size: .656em;
+}
+.smallest {
+    font-size: .583em;
+}
+.lead-sm {
+    font-size: 0.75rem;
+    font-weight: 300;
+}
+.table-processing-custom {
+    display: none; //let datatable override display style in js code by design
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.1);
+    background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+    background-size: 1rem 1rem;
+    animation: 1s linear infinite progress-bar-stripes;
+    z-index: 1000;
+}
+table.table-sm {
+    tbody{
+        tr {
+            td {
+                button.btn {
+                    font-size: 1em;
+                    padding-right: 0.25rem !important;
+                    padding-left: 0.25rem !important;
+                    padding-top: 0 !important;
+                    padding-bottom: 0 !important;
+                }
+            }
+        }
+    }
+}
+[data-toggle="mask"] {
+    background-color: rgba(0,0,0,0.1);
+    background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+    background-size: 1rem 1rem;
+    animation: 1s linear infinite progress-bar-stripes;
+}
+td.table-filter.disabled {
+    background-color: $input-disabled-bg !important;
+    color: rgba(color-contrast($input-disabled-bg), $form-check-input-disabled-opacity) !important;
+}
+$width-list: ("25": 25%,"50": 50%,"75": 75%,"100": 100% )!default;
+@each $key,$val in map-remove($width-list, "100"){
+    .w-#{$key} {
+        max-width: $val !important;
+    } 
+}
+@each $bp, $val in $container-max-widths {
+    @include media-breakpoint-up($bp) {
+        @each $key,$val in $width-list {
+            .w-#{$bp}-#{$key} {
+                max-width: $val !important;
+            }
+        }
+    }
+}
+$image-size-list: ("25": 25px,"35":35px,"50": 50px,"75": 75px,"100": 100px, "200":200px) !default;
+@each $key,$val in $image-size-list {
+    .image-circle-#{$key} {
+        width: $val;
+        height: $val;
+        position: relative;
+        overflow: hidden;
+        border-radius: 50%;
+        background-color: rgba(255,255,255,0.15);
+
+        img {
+            display: inline;
+            margin: 0 auto;
+            height: 100%;
+            width: auto;
+        }
+    }
+}
+

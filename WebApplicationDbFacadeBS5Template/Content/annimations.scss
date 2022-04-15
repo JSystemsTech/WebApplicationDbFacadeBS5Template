@@ -1,0 +1,176 @@
+
+
+@keyframes fadeInExpand {
+    0% {
+        opacity: 0;
+        height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    100% {
+        opacity: 1;
+        height: auto;
+    }
+}
+
+@-moz-keyframes fadeInExpand {
+    0% {
+        opacity: 0;
+        height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    100% {
+        opacity: 1;
+        height: auto;
+    }
+}
+
+@-webkit-keyframes fadeInExpand {
+    0% {
+        opacity: 0;
+        height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    100% {
+        opacity: 1;
+        height: auto;
+    }
+}
+
+@-o-keyframes fadeInExpand {
+    0% {
+        opacity: 0;
+        height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    100% {
+        opacity: 1;
+        height: auto;
+    }
+}
+
+@-ms-keyframes fadeInExpand {
+    0% {
+        opacity: 0;
+        height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    100% {
+        opacity: 1;
+        height: auto;
+    }
+}
+
+
+
+@keyframes fadeOutColapse {
+    0% {
+        opacity: 1;
+        height: auto;
+    }
+
+    100% {
+        opacity: 0;
+        height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+@-moz-keyframes fadeOutColapse {
+    0% {
+        opacity: 1;
+        height: auto;
+    }
+
+    100% {
+        opacity: 0;
+        height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+@-webkit-keyframes fadeOutColapse {
+    0% {
+        opacity: 1;
+        height: auto;
+    }
+
+    100% {
+        opacity: 0;
+        height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+@-o-keyframes fadeOutColapse {
+    0% {
+        opacity: 1;
+        height: auto;
+    }
+
+    100% {
+        opacity: 0;
+        height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+@-ms-keyframes fadeOutColapse {
+    0% {
+        opacity: 1;
+        height: auto;
+    }
+
+    100% {
+        opacity: 0;
+        height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+
+.list-group.swing {
+    -webkit-perspective: 100px;
+    perspective: 100px;
+    height:300px;
+    overflow-y:auto;
+    > .list-group-item[role="option"] {
+        opacity: 1;
+        height: auto;
+        animation: fadeInExpand 0.5s;
+        -webkit-animation: fadeInExpand 0.5s;
+        -moz-animation: fadeInExpand 0.5s;
+        -o-animation: fadeInExpand 0.5s;
+        -ms-animation: fadeInExpand 0.5s;
+
+        &:last-child {
+            border-bottom-width: 1px;
+        }
+
+        &:not(.show) {
+            opacity: 0;
+            height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            animation: fadeOutColapse 0.5s;
+            -webkit-animation: fadeOutColapse 0.5s;
+            -moz-animation: fadeOutColapse 0.5s;
+            -o-animation: fadeOutColapse 0.5s;
+            -ms-animation: fadeOutColapse 0.5s;
+        }
+    }
+}
